@@ -19,6 +19,7 @@ test.describe('validate the Actions', () => {
     await inputName.fill('Playwright User');
     console.log("Textbox input name is : " + await inputName.inputValue());
     const textboxLength:string|null =await inputName.getAttribute('maxlength');
+    expect(textboxLength).toBe('15');
     console.log("Textbox length is: " + textboxLength);
   });
 
