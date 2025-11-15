@@ -12,7 +12,7 @@ test.describe('validate the Actions', () => {
     expect(await page.title()).toBe("Automation Testing Practice");
   });
 
-  test.only('Validate the input textbox action', async ({ page }) => {
+  test('Validate the input textbox action', async ({ page }) => {
     const inputName:Locator = page.locator('#name');
     expect(inputName).toBeVisible();
     expect(inputName).toBeEnabled();
