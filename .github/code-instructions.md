@@ -1,98 +1,89 @@
-Global Standards (Applies to All Files)
-=======================================
-- Use meaningful variable, function, file, and folder names – no abbreviations or unclear terms.
-- No spelling mistakes.
-- Follow consistent naming conventions.
-- Ensure files are organized correctly into: `utils/`, `constants/`, `components/`, `types/`, `helpers/`,
-`test/` etc.
-Naming Conventions
-==================
-- Use kebab-case for folder and file names (e.g., `user-login-test`, `api-utils`).
-- Use camelCase for methods and variables (e.g., `calculateTotal`, `userName`).
-- Use PascalCase for selectors (locators) (e.g., `SubmitButton`, `UserProfileSection`).
-- Use PascalCase for types and interfaces, prefixing interfaces with "I" (e.g., `IUser`, `type
-TradeData`).
-- Ensure names are descriptive and consistent across the codebase.
-Framework Structure & Quality
-=============================
-- Ensure code is modular, reusable, and maintainable for easy updates and scalability.
-- Extract and reuse utility/helper functions to promote efficiency and reduce redundancy.
-- Enforce code quality with ESLint & Prettier for consistent linting and formatting.
-- Use setup/teardown processes to reset the environment before and after tests.
-- Apply proper error handling with try/catch/finally blocks.
-- Avoid unnecessary blank lines and spelling mistakes to maintain clarity.
-- Include minimal, necessary comments to enhance understanding without clutter.
-TypeScript Standards
-====================
-- Enable strict mode in `tsconfig.json` for enhanced type safety.
-- Prefer types/interfaces over using any to ensure type clarity.
-- Use readonly for defining constants to prevent unintended modifications.
-- Favor enums/union types over string literals for better type safety and readability.
-- Prefer using async/await over then/catch for handling asynchronous operations.
-- Define DTOs (Data Transfer Objects) for complex request and response structures.
-- Export only necessary interfaces and types to maintain a clean and efficient codebase.
-- Properly escape regex patterns in JSON: Use double backslashes `\d` instead of single `\d` when
-storing regex.
-3I Testing Principles
-=====================
-- Independent: Ensure each test runs independently, with no reliance on the outcome of other tests.
-- Isolated: Design tests to avoid affecting each other, maintaining a clean state before and after
-execution.
-- Idempotent: Guarantee that tests produce the same result every time they are re-run.
+# Pull Request Checklist
+
+Before requesting review, confirm all items below are complete. These items are meant to be automated/validated by CI where possible.
+
+//- [ ] Branch name follows convention (e.g., feature/issue-1234-description or bugfix/issue-1234)
+//- [ ] Ticket/JIRA ID linked in PR description
+- [ ] Code compiles and TypeScript strict mode passes (tsc --noEmit)
+- [ ] ESLint and Prettier run and fixes applied (npm run lint && npm run format)
+- [ ] No use of `any` or other banned patterns; addressed any CI lint warnings
+- [ ] Unit and integration tests added/updated where applicable and all tests pass (npm test)
+- [ ] Playwright tests updated/added for UI changes and pass locally
+- [ ] New code covered by meaningful assertions and avoids fragile locators
+- [ ] No secrets, passwords, or keys committed (.env used and documented)
+- [ ] Storage states, session files, or fixtures updated if authentication changed
+- [ ] CI artifacts (screenshots, traces) produced on failures and configured for reporting
+- [ ] Changelog updated if behaviour or public API changed
+- [ ] Documentation (README, docs) updated for user-facing or infra changes
+- [ ] Requested reviewers added and expected reviewers notified
+
+---
+
+# Quick Reference (do not replace checklist — actionable items above must be completed)
+
+Global Standards
+- Use meaningful names; follow project folder structure: utils/, constants/, components/, types/, helpers/, test/.
+- No spelling mistakes; consistent naming conventions.
+
+Naming conventions
+- Files/folders: kebab-case (e.g., user-login-test)
+- Variables/methods: camelCase (e.g., calculateTotal)
+- Selectors/locators & types/interfaces: PascalCase; prefix interfaces with `I` (e.g., IUser)
+
+Framework & Quality
+- Keep code modular and reusable; extract utilities to avoid duplication.
+- Use setup/teardown in tests to reset environment.
+- Use try/catch/finally for error handling where appropriate.
+- Enforce ESLint & Prettier; CI should fail on violations.
+
+TypeScript
+- Enable strict mode in tsconfig.json.
+- Prefer explicit types/interfaces; avoid `any`.
+- Use readonly for constants, enums/union types for fixed sets.
+- Prefer async/await; export only necessary types.
+
+Testing Principles (3I)
+- Independent: tests don't rely on each other.
+- Isolated: avoid side-effects between tests.
+- Idempotent: tests consistently produce same results.
+
 Locator Strategy
-================
-- Do not use index-based locators (e.g., div[3]) to ensure stability and maintainability.
-- Choose data-test-id, unique IDs/names, CSS selectors, and relative XPaths for precise and stable
-targeting.
-- Use regex patterns for dynamic locators instead of string concatenation.
-- Prefer direct data-testid values over CSS selectors targeting static elements.
-- Utilize the Page Object Model to organize and reuse locators, enhancing code reusability and
-readability.
-- Confirm element visibility and enablement before performing actions.
-- Employ explicit waits to manage dynamic content loading and avoid hard-coded sleeps.
+- Avoid index-based locators. Prefer data-test-id, unique IDs/names, CSS selectors, or relative XPaths.
+- Use regex for dynamic locators. Confirm visibility/enabled before action.
+- Prefer Page Object Model for reuse.
+
 Assertions
-==========
-- Include Meaningful Assertions: Ensure each test contains at least one meaningful assertion.
-- Directly Validate Intended Behavior: Confirm the intended behavior and outcomes of the test.
-- Use Hard Assertions for Critical Checks: Critical validations where failure should halt the test.
-- Use Soft Assertions for Optional Validations: Optional checks to allow the test to continue.
-Test Data Handling Guidelines
-=============================
-- Avoid Hard-Coding Sensitive Values: Do not expose sensitive information like passwords or API
-keys.
-- Manage Sensitive Data with .env and Encryption: Store sensitive data securely in `.env` with
-encryption.
-- Centralize Configuration in playwright.config.ts for easy maintenance.
-- Maintain Hierarchical Test Data Structure for clarity.
+- Include at least one meaningful assertion per test.
+- Use hard assertions for critical checks; soft assertions for optional checks.
+
+Test Data & Security
+- Avoid hard-coding sensitive values; use .env and secret management.
+- Do not commit credentials. Use storageState.json for session reuse where needed.
+
 Playwright + TypeScript Best Practices
-======================================
-- New Browser Context per Test: Ensure test isolation by creating a new context per test.
-- Session Reuse with storageState.json: Reuse login sessions to reduce login overhead.
-- API Mocking with page.route(): Mock APIs to simulate scenarios.
-- Validate Requests: Use expect(request.postDataJSON()) to validate request payloads.
-- Configure Retries: Handle flaky tests by setting retries in `playwright.config.ts`.
-- Use Built-in Assertions: Use `toHaveText` and `toHaveCount` for reliable checks.
-- Parallel-Safe Tests: Ensure tests run parallel across multiple devices/browsers.
-- Comprehensive Reporting: Store Allure/HTML reports, screenshots, videos, traces.
+- New browser context per test; reuse login sessions with storageState.json.
+- Mock APIs with page.route() where appropriate. Validate requests/assert payloads.
+- Use built-in assertions (toHaveText, toHaveCount). Configure retries for flaky tests.
+- Collect reports: Allure/HTML, screenshots, videos, traces.
+
 Configurations & Documentation
-==============================
-- Use CLI commands for execution flexibility.
-- Maintain a detailed README.md with setup instructions, naming conventions, and execution
-guide.
-- Configure retries, reporters, environment variables, and parallelization in `playwright.config.ts`.
-Security & Quality
-==================
-- Store sensitive data in `.env` files and manage secrets using Vault or GitHub Secrets.
-- Ensure no credentials are committed to the codebase.
-- Implement performance validations to ensure application efficiency.
+- Centralize configuration in playwright.config.ts.
+- Provide CLI commands and README with setup/run instructions.
+- Configure retries, reporters, env vars, parallelization in config.
+
+CI & Enforcement
+- CI should run typecheck, lint, tests, and Playwright runs (or smoke subset).
+- Fail PRs on critical violations (use of any, hard-coded secrets, failing tests).
+- Auto-fix minor lint/format issues where feasible.
+
+Notes for Reviewers
+- Verify the PR checklist is complete.
+- Focus on: correctness, test coverage, security (no secrets), and maintainability.
+- Request changes if missing tests, failing CI checks, or unclear naming and API design.
+
+<!-- Detailed guidance retained below for contributors; can be pruned or expanded as needed. -->
 <!-- JIRA & Test Suite Management
 ============================
 - Include JIRA ID at the suite level for clear reference.
 - Logically group tests into Smoke and Regression categories.
 - Maintain traceability between JIRA issues and test runs for effective tracking. -->
-Violations & Auto-correction
-============================
-- Copilot must auto-correct violations before finalizing the output.
-- Developer PRs with violations will be auto-rejected by CI check.
-- Common violations like `any`, inline event handlers, or hardcoded strings must be flagged.
-- The changes should align with project coding standards without altering intended behavior
