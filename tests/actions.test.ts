@@ -1,5 +1,6 @@
 import { test, expect, Locator } from "@playwright/test";
 import { get } from "http";
+import { text } from "stream/consumers";
 
 test.describe("validate the Actions of form page", () => {
   test.beforeEach(async ({ page }) => {
@@ -134,5 +135,96 @@ test.describe("validate the Actions of form page", () => {
       }
     }
     await page.waitForTimeout(2000);
+  });
+
+  test("TC_007: Validate the dropdown select action", async ({ page }) => {
+    const countryDropdpwn: Locator = page.getByLabel("Country:");
+    await countryDropdpwn.scrollIntoViewIfNeeded();
+    await expect(countryDropdpwn).toBeVisible();
+    await countryDropdpwn.selectOption("India");
+    await page.waitForTimeout(1000);
+    expect(await countryDropdpwn.inputValue()).toBe("india");
+    await countryDropdpwn.selectOption({ label: "United States" });
+    await page.waitForTimeout(1000);
+    expect(await countryDropdpwn.inputValue()).toBe("usa");
+    await countryDropdpwn.selectOption({ value: "uk" });
+    await page.waitForTimeout(1000);
+    expect(await countryDropdpwn.inputValue()).toBe("uk");
+    await countryDropdpwn.selectOption({ index: 5 });
+    await page.waitForTimeout(1000);
+    expect(await countryDropdpwn.inputValue()).toBe("australia");
+
+    //capture all the options from dropdown and print them
+    const countryOptions: Locator = page.locator("#country>option");
+    const countryCount: number = await countryOptions.count(); // get the count of options
+    expect(countryCount).toBe(10);
+    console.log("Total options in country dropdown: " + countryCount);
+    const countryValues: string[] = (
+      await countryOptions.allTextContents()
+    ).map((text) => text.trim());
+    console.log("Options values are: " + countryValues);
+    expect(countryValues).toContain("India");
+    expect(countryValues).toMatchObject(countryValues);
+  });
+
+  test("TC_008: Validate the multiple select dropdown action", async ({
+    page,
+  }) => {
+    const colorDropdown: Locator = page.locator("#colors");
+    await colorDropdown.scrollIntoViewIfNeeded();
+    await expect(colorDropdown).toBeVisible();
+    //select multiple options
+    await colorDropdown.selectOption({ value: "red" }); //using value
+    expect(await colorDropdown.inputValue()).toBe("red");
+    await page.waitForTimeout(1000);
+    await colorDropdown.selectOption(["Yellow", "White"]); //using visible text
+    expect(await colorDropdown.inputValue()).toBe("yellow");
+    await page.waitForTimeout(1000);
+    await colorDropdown.selectOption({ index: 2 }); //using index
+    expect(await colorDropdown.inputValue()).toBe("green");
+    await page.waitForTimeout(1000);
+    const colorCount: number = await colorDropdown.locator("option").count(); //get collections count
+    console.log("Total color options: " + colorCount);
+  });
+
+  test("TC_009: Validate the dropdpwn sorting action", async ({ page }) => {
+    const animalDropdown: Locator = page.locator("#animals");
+    await animalDropdown.scrollIntoViewIfNeeded();
+    await expect(animalDropdown).toBeVisible();
+    const animalOptions: Locator = animalDropdown.locator("option");
+    const animalCount: number = await animalOptions.count();
+    console.log("Total animal options: " + animalCount);
+    const animalList: string[] = (await animalOptions.allTextContents()).map(
+      (text) => text.trim()
+    );
+    console.log("Animal options are: " + animalList);
+    const originalList: string[] = animalList; //create a copy of original list
+    console.log("Original list: " + [...originalList]);
+    const sortedList: string[] = animalList.sort(); //sort the copied list
+    console.log("Sorted list: " + [...sortedList]);
+    expect(originalList).toEqual(sortedList); //compare both lists
+  });
+
+  test("TC_010: Validate duplicates in dropdown", async ({ page }) => {
+    const colorDropdown: Locator = page.locator("#colors");
+    await colorDropdown.scrollIntoViewIfNeeded();
+    const colorOptions: Locator = colorDropdown.locator("option");
+    const colorCount: number = await colorOptions.count();
+    console.log("Total color options: " + colorCount);
+    const colorList: string[] = (await colorOptions.allTextContents()).map(
+      (text) => text.trim()
+    );
+    console.log("Color options are: " + colorList);
+    const colorSet = new Set<String>();
+    const colorDuplicates: string[] = [];
+    for (const color of colorList) {
+      if (colorSet.has(color)) {
+        colorDuplicates.push(color); //add to duplicate list
+      } else {
+        colorSet.add(color); //add to set
+      }
+    }
+    console.log("Color options set are: " + [...colorSet]);
+    console.log("Duplicate color options are: " + colorDuplicates);
   });
 });
