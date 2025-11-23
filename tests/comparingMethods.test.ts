@@ -15,7 +15,7 @@ test.describe("Comparing Methods Tests", () => {
     console.log(`TextContent of first product: ${item1b}`);
   });
 
-  test.only("TC_002: Should compare both methods for all products", async ({
+  test("TC_002: Should compare both methods for all products", async ({
     page,
   }) => {
     const products: Locator = page.locator(".product-item");
