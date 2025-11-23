@@ -1,5 +1,6 @@
 import { test, expect, Locator } from "@playwright/test";
-import {commonHelper } from './helper/common.helper';
+import { commonHelper } from "./helper/common.helper";
+import { text } from "stream/consumers";
 
 test.describe("Comparing Methods Tests", () => {
   test.beforeEach(async ({ page }) => {
@@ -28,7 +29,22 @@ test.describe("Comparing Methods Tests", () => {
         .nth(i)
         .textContent(); //extract text with whitespace and hidden text
       console.log(`Product ${i + 1} - InnerText: ${innerTextValue}`);
-      console.log(`Product ${i + 1} - TextContent: ${commonHelper.cleanText(textContentValue)}`);
+      console.log(
+        `Product ${i + 1} - TextContent: ${commonHelper.cleanText(
+          textContentValue
+        )}`
+      );
+    }
+  });
+
+  test('TC_003: Should compare allinnerText() vs alltextContent()', async ({ page }) => {
+    const products: Locator = page.locator('.product-item');
+    //fetch all elements using both methods
+    const innerTextValues: string[] = await products.allInnerTexts(); //array of plain text without whitespace
+    const textContentValues: string [] = await products.allTextContents(); //array of text with whitespace and hidden text
+    for (let i = 0; i < innerTextValues.length; i++) {
+      console.log(`Product ${i + 1} - allInnerTexts: ${innerTextValues[i]}`);
+      console.log(`Product ${i + 1} - allTextContents: ${commonHelper.cleanText(textContentValues[i])}`);
     }
   });
 });
