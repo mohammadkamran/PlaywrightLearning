@@ -1,4 +1,5 @@
 import { test, expect, Locator } from "@playwright/test";
+import {commonHelper } from './helper/common.helper';
 
 test.describe("Comparing Methods Tests", () => {
   test.beforeEach(async ({ page }) => {
@@ -27,9 +28,7 @@ test.describe("Comparing Methods Tests", () => {
         .nth(i)
         .textContent(); //extract text with whitespace and hidden text
       console.log(`Product ${i + 1} - InnerText: ${innerTextValue}`);
-      console.log(
-        `Product ${i + 1} - TextContent: ${textContentValue?.trim() ?? 'N/A'}`
-      );
+      console.log(`Product ${i + 1} - TextContent: ${commonHelper.cleanText(textContentValue)}`);
     }
   });
 });
