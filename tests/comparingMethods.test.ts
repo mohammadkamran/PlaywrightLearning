@@ -47,4 +47,23 @@ test.describe("Comparing Methods Tests", () => {
       console.log(`Product ${i + 1} - allTextContents: ${commonHelper.cleanText(textContentValues[i])}`);
     }
   });
+
+  //all() method converts Locator to an array of Locators
+  //returns array of Locators
+  //each Locator can be used to perform further actions
+  test('TC_004: should validate all() methods', async ({ page }) => {
+    const products: Locator = page.locator('.product-item');
+    const productLocators: Locator[] = await products.all();
+    console.log('product Locators:', productLocators);
+    //for of loop
+    for(let prodLoc of productLocators) {
+      const prodText: string | null = await prodLoc.innerText();
+      console.log('Product Text:', prodText);
+    }
+    //for in loop
+    for(let i in productLocators) {
+      const prodText: string | null = await productLocators[i].innerText();
+      console.log(`Product ${Number(i) + 1} Text:`, prodText);
+    }
+  });
 });
