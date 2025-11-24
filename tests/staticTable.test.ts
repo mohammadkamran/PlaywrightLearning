@@ -1,5 +1,4 @@
 import { test, expect, Locator } from "@playwright/test";
-import { console } from "inspector";
 
 test.describe("Static Table Tests", () => {
   test.beforeEach(async ({ page }) => {
