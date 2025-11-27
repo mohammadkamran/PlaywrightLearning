@@ -79,5 +79,6 @@ test.describe("bootstrap Datepicker Tests", () => {
         }
         expect(checkOutDateSelected).toBeTruthy();
         console.log(`Check-out date ${checkOutDate}-${checkOutMonth}-${checkOutYear} selected successfully.`);
+        await page.waitForTimeout(3000);
     });
 });
