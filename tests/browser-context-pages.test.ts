@@ -50,7 +50,7 @@ test.describe("Browser Context Page demo", () => {
     await page2.goto("https://playwright.dev/docs/intro");
     const page2Title:string|null = await page1.title();
     console.log(`Title of page is: ${page2Title}`);
-    await page1.waitForTimeout(3000);
-    await page2.waitForTimeout(3000);
+    await page1.waitForTimeout(2000);
+    await page2.waitForTimeout(2000);
   });
 });
