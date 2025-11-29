@@ -6,7 +6,7 @@ test.describe("Frame Handling Tests", () => {
     const pageTitle: string | null = await page.title();
     console.log(`Page Title: ${pageTitle}`);
   });
-  //Approach 1: using page.frame()
+  //Approach 1: using page.frame() as it allows only frame url or name of the frame.
     test("TC_001: Should interact with single frame", async ({ page }) => {
         const frameCount = page.frames().length;
         console.log(`Total number of frames on the page: ${frameCount}`);
@@ -23,7 +23,7 @@ test.describe("Frame Handling Tests", () => {
             
         }
     });
-    //Approach 2: using frameLocator
+    //Approach 2: using frameLocator as it allows any locator of the frame
     test("TC_002: Should interact with nested frames", async ({ page }) => {
         await page.locator("a[href='#Multiple']").click(); //Navigate to Nested Frames section
         const outerFrameLocator = page.frameLocator("iframe[src='MultipleFrames.html']");
