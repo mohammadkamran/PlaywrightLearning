@@ -35,6 +35,7 @@ export default defineConfig({
     screenshot: "only-on-failure",
     video: "retain-on-failure",
     actionTimeout:5000,
+    ignoreHTTPSErrors:true
   },
 
   /* Configure projects for major browsers */
