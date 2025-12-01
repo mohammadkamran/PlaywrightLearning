@@ -4,8 +4,8 @@ test.describe('Keyboard actions demo', ()=>{
     test('TC_001: Validate the keyboard actions', async({page})=>{
         await page.goto('https://testautomationpractice.blogspot.com/#');
         const inputField1:Locator = page.locator('#input1');
-        await inputField1.fill("Welcome");
         await inputField1.focus();
+        await page.keyboard.insertText('Welcome');
         await page.keyboard.press('Control+A');
         await page.keyboard.press('Control+c');
         await page.keyboard.press('Tab');
