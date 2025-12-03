@@ -6,7 +6,7 @@ const loginCredentails: string[][] = [
   ["laura.taylor1234@example.com", "invalidPassword", "invalid"],
   [" ", " ", "invalid"],
 ];
-test.describe("2D array demo", async () => {
+test.describe("2D array demo", () => {
   for (const [email, password, status] of loginCredentails) {
     test(`TC_001: Validate login credentials for ${email} and ${password}`,async({page})=>{
         await page.goto('https://demowebshop.tricentis.com/login');

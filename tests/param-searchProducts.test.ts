@@ -2,7 +2,7 @@ import {test,expect} from '@playwright/test';
 
 const searchedItems:string[] = ['laptop', 'Gift card', 'smartphone', 'diamond'];
 
-test.describe('Parametrized demo',async()=>{
+test.describe('Parametrized demo', ()=>{
     for(const items of searchedItems){
         test(`TC_001: Validate for searched item ${items} through for loop`,async({page})=>{
             await page.goto('https://demowebshop.tricentis.com/');
