@@ -4,3 +4,9 @@ export const commonHelper = {
     return text.replace(/\s+/g, " ").trim();
   }
 };
+
+export function generateRandomEmail(prefix: string = 'user'): string {
+  const timestamp = Date.now();
+  return `${prefix}_${timestamp}@example.com`;
+};
+
