@@ -1,5 +1,6 @@
 import { test, expect } from "@playwright/test";
 import requestData from "../api/api-json-testData/request.json";
+import authData from '../api/api-json-testData/auth.json';
 
 
 test.describe('Delete API demo',()=>{
@@ -17,7 +18,7 @@ test.describe('Delete API demo',()=>{
 
     const tokenResponse = await request.post(
       "https://restful-booker.herokuapp.com/auth",
-      { data: requestData[2] }
+      { data: authData }
     );
     const tokenResponseBody = await tokenResponse.json();
     const token = tokenResponseBody.token;
@@ -25,8 +26,10 @@ test.describe('Delete API demo',()=>{
 
     //Delete APi
 
-    const deleteReponse = await request.delete(`https://restful-booker.herokuapp.com/booking/${bookingid}`,{data:{Headers:{Cookie:`token=${token}`}}});
-    const deleteReponseText = await deleteReponse.text();
+    const deleteResponse = await request.delete(`https://restful-booker.herokuapp.com/booking/${bookingid}`,{headers:{Cookie:`token=${token}`}});
+    const deleteReponseText = await deleteResponse.text();
     console.log("Delete API response: ",deleteReponseText)
+    expect(deleteResponse.status()).toBe(201);
+    expect(deleteReponseText).toBe("Created");
     });
 });
