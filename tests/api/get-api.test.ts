@@ -1,5 +1,4 @@
 import {test,expect} from '@playwright/test';
-import { it } from 'node:test';
 
 test.describe('Get api demo',()=>{
     test('TC_001: Get booking details by ID path parameter',async({request})=>{
