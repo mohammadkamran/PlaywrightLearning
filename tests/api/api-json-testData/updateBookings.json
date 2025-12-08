@@ -1,0 +1,24 @@
+[
+  {
+    "firstname": "Jim-Updated",
+    "lastname": "Will-Updated",
+    "totalprice": 999,
+    "depositpaid": false,
+    "bookingdates": {
+      "checkin": "2020-01-01",
+      "checkout": "2022-01-05"
+    },
+    "additionalneeds": "Dinner"
+  },
+  {
+    "firstname": "James-Updated",
+    "lastname": "Brown-Updated",
+    "totalprice": 555,
+    "depositpaid": false,
+    "bookingdates": {
+      "checkin": "2024-02-01",
+      "checkout": "2025-02-15"
+    },
+    "additionalneeds": "All meals"
+  }
+]

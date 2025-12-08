@@ -26,8 +26,8 @@ test.describe("API create Request Demo", () => {
     expect(responseBody).toHaveProperty("booking");
     expect(responseBody).toHaveProperty("booking.additionalneeds");
     const bookingid = responseBody.bookingid;
-    const booking = responseBody.booking;
     console.log("bookingid: ", bookingid)
+    const booking = responseBody.booking;
     console.log("booking: ", booking);
     const bookingdates = responseBody.booking.bookingdates;
     console.log("booking dates: ", bookingdates)
