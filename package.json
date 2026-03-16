@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test:ci": "playwright test tests/ci --workers=1"
+    "test:ci": "playwright test tests/ci --workers=1",
+    "test:all": "playwright test --workers=1"
   },
   "keywords": [],
   "author": "",
