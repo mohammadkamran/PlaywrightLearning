@@ -11,10 +11,15 @@ test.describe("Tabs Demo", () => {
       context.waitForEvent("page"),
       await page1.locator("button:has-text('New Tab')").click(),
     ]);
+    await page2.waitForLoadState('networkidle');
     const pages = context.pages();
     console.log(`Number of open pages are: ${pages.length}`);
     //fetch title of page using context
     console.log(`Title of page1 ${await pages[0].title()}`);
     console.log(`Title of page1 ${await pages[1].title()}`);
+    await page1.bringToFront();
+    await page1.waitForTimeout(3000);
+    await page2.bringToFront();
+    await page2.waitForTimeout(3000);
   });
 });
