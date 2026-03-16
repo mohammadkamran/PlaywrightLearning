@@ -2,7 +2,9 @@
   "name": "playwrightlearning",
   "version": "1.0.0",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "test:ci": "playwright test tests/ci --workers=1"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
