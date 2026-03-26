@@ -1,5 +1,5 @@
 import { chromium, Locator, test } from "@playwright/test";
-import { title } from "process";
+
 
 test.describe("Popup Demo", () => {
   test("TC_001: Validate popups", async ({browser}) => {
