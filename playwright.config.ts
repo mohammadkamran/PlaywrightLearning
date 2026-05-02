@@ -30,6 +30,12 @@ export default defineConfig({
   timeout: 60000,
   expect: {
     timeout: 10000,
+    toHaveScreenshot:{
+      animations: 'allow',
+      maxDiffPixelRatio: undefined,
+      maxDiffPixels:undefined,
+      threshold:undefined,
+    }
   },
   use: {
     /* Base URL to use in actions like `await page.goto('')`. */
