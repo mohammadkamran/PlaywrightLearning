@@ -1,7 +1,9 @@
-import { test, expect } from "@playwright/test";
+import { test, expect, request } from "@playwright/test";
 
-test("demo test", async ({ request }) => {
-  const response = await request.get(
+test("demo test", async () => {
+  const apiContext = await request.newContext();
+
+  const response = await apiContext.get(
     "https://jsonplaceholder.typicode.com/posts",
   );
   expect(response.status()).toBe(200);
@@ -15,4 +17,6 @@ test("demo test", async ({ request }) => {
   expect(firstPost).toHaveProperty("id");
   expect(firstPost).toHaveProperty("title");
   expect(firstPost).toHaveProperty("body");
+
+  await apiContext.dispose();
 });
