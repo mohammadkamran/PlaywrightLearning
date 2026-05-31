@@ -15,6 +15,7 @@ test.describe('Auth API Test Suite', () => {
 
     const responseBody = await response.json();
     expect(responseBody.token).toBeTruthy();
+    console.log("token: ", responseBody.token);
   });
 
   // ✅ 2. Invalid Username
@@ -110,7 +111,8 @@ test.describe('Auth API Test Suite', () => {
 
     const token1 = (await res1.json()).token;
     const token2 = (await res2.json()).token;
-
+    console.log(`Token 1: ${token1}`);
+    console.log(`Token 2: ${token2}`);
     expect(token1).not.toBe(token2);
   });
 
