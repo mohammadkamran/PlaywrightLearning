@@ -1,5 +1,9 @@
 import { defineConfig, devices } from "@playwright/test";
 
+// Ensure TypeScript doesn't error about missing Node typings for `process` in environments
+// where @types/node isn't installed.
+declare const process: any;
+
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
@@ -30,12 +34,12 @@ export default defineConfig({
   timeout: 60000,
   expect: {
     timeout: 10000,
-    toHaveScreenshot:{
-      animations: 'allow',
+    toHaveScreenshot: {
+      animations: "allow",
       maxDiffPixelRatio: undefined,
-      maxDiffPixels:undefined,
-      threshold:undefined,
-    }
+      maxDiffPixels: undefined,
+      threshold: undefined,
+    },
   },
   use: {
     /* Base URL to use in actions like `await page.goto('')`. */
@@ -43,9 +47,9 @@ export default defineConfig({
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     headless: false,
-    trace: 'retry-with-trace',
-    screenshot: 'only-on-failure',
-    video: 'retain-on-failure',
+    trace: "retry-with-trace",
+    screenshot: "only-on-failure",
+    video: "retain-on-failure",
     actionTimeout: 5000,
     ignoreHTTPSErrors: true,
     geolocation: { latitude: 25.5941, longitude: 85.1376 },
